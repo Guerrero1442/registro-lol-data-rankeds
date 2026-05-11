@@ -1,12 +1,14 @@
 import time
 from datetime import datetime
 
+import gspread
 import pytz
-from riotwatcher import ApiError
+from riotwatcher import ApiError, LolWatcher, RiotWatcher
+
 from src.utils import formatear_fecha
 
 
-def obtener_puuid(riot_client, game_name, tag_line, continental_route="americas"):
+def obtener_puuid(riot_client: RiotWatcher, game_name: str, tag_line: str, continental_route: str ="americas") -> str:
     try:
         # Petición obligatoria a través de la instancia de RiotWatcher
         account_data = riot_client.account.by_riot_id(
@@ -23,7 +25,7 @@ def obtener_puuid(riot_client, game_name, tag_line, continental_route="americas"
             print(f"Error de API: {err}")
         return None
 
-def obtener_partidas_pendientes(sheet, puuid, region="americas", lol_watcher=None):
+def obtener_partidas_pendientes(sheet: gspread.Worksheet, puuid: str, lol_watcher: LolWatcher, region: str ="americas" ) -> list[str]:
     registrados = set(sheet.col_values(3))
 
     try:
@@ -51,7 +53,7 @@ def obtener_partidas_pendientes(sheet, puuid, region="americas", lol_watcher=Non
 
     return pendientes
 
-def process_toplane_matches(match_list, puuid, watcher, region_route="americas"):
+def process_toplane_matches(match_list: list[str], puuid: str, watcher: LolWatcher, region_route: str ="americas") -> list[dict]:
     datos_partidas = []
 
     for match_id in match_list:
