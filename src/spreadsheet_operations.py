@@ -18,7 +18,7 @@ def sheet_connection(file_json: Path, spreadsheet_id: str, sheet_name: str) -> g
     return sheet
 
 
-def insertar_dataframe_mapeado(sheet: gspread.Worksheet, df: pd.DataFrame, mapping: dict, start_row: int = 0) -> None:
+def insert_dataframe(sheet: gspread.Worksheet, df: pd.DataFrame, mapping: dict, start_row: int = 0) -> None:
     """
     Inserta un DataFrame en Google Sheets usando un mapeo de columnas.
 
@@ -54,3 +54,5 @@ def insertar_dataframe_mapeado(sheet: gspread.Worksheet, df: pd.DataFrame, mappi
     if payload:
         sheet.batch_update(payload, value_input_option="USER_ENTERED")
         print(f"✅ Se insertaron {len(records)} filas exitosamente.")
+    else :
+        print("⚠️ No se encontraron datos para insertar.")

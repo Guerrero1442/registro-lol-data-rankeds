@@ -5,7 +5,7 @@ import gspread
 import pytz
 from riotwatcher import ApiError, LolWatcher, RiotWatcher
 
-from src.utils import formatear_fecha
+from utils.utils import formatear_fecha
 
 
 def obtener_puuid(riot_client: RiotWatcher, game_name: str, tag_line: str, continental_route: str ="americas") -> str:

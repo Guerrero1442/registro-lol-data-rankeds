@@ -18,14 +18,16 @@ def main():
 
     API_KEY = settings.api_key
     
-    watcher = LolWatcher(API_KEY)
-    riot_watcher = RiotWatcher(API_KEY)
+    print("🔑 Conectando a Riot API...")
+    watcher: LolWatcher = LolWatcher(API_KEY)
+    riot_watcher: RiotWatcher = RiotWatcher(API_KEY)
     region_route = settings.region_route
     
     
+    print("🔍 Obteniendo PUUID...")
     my_puuid = obtener_puuid(riot_watcher, settings.game_name, settings.tag_line, settings.region_route)
     
-    matches = obtener_partidas_pendientes(sheet, my_puuid, region_route)
+    matches = obtener_partidas_pendientes(sheet, my_puuid, watcher, region_route)
 
 
     matches_data = process_toplane_matches(
